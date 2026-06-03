@@ -1,0 +1,184 @@
+@import "tailwindcss";
+
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-yellow: #F5B800;
+  --color-terminal: #0A0A0A;
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Sidebar: CSS-layer mobile layout — runs before JS hydrates */
+@media (max-width: 599px) {
+  .sidebar-rail {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    height: 100% !important;
+    z-index: 10 !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    border-right: none !important;
+    pointer-events: none !important;
+    overflow: hidden !important;
+  }
+  .sidebar-rail.sidebar-open {
+    width: min(300px, 88vw) !important;
+    min-width: min(300px, 88vw) !important;
+    pointer-events: auto !important;
+  }
+}
+
+/* iPhone safe area — prevents content from hiding behind notch / home indicator */
+@supports (padding: env(safe-area-inset-bottom)) {
+  body {
+    padding-left:   env(safe-area-inset-left);
+    padding-right:  env(safe-area-inset-right);
+  }
+}
+
+body {
+  background: var(--landing-bg, #000000);
+  color: var(--landing-text, #ffffff);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Theme tokens ──────────────────────────────────────────────────────────── */
+:root {
+  color-scheme: dark;
+  /* Landing page */
+  --landing-bg:               #000000;
+  --landing-text:             #ffffff;
+  --landing-text-dim:         rgba(255,255,255,0.45);
+  --landing-bracket:          rgba(255,255,255,0.1);
+  --landing-terminal-bg:      #0A0A0A;
+  --landing-terminal-border:  rgba(255,255,255,0.06);
+  --landing-terminal-header:  rgba(255,255,255,0.04);
+  --landing-terminal-text:    rgba(255,255,255,0.45);
+  --landing-btn-text:         rgba(255,255,255,0.7);
+  --landing-btn-border:       rgba(255,255,255,0.2);
+  --landing-btn-hover-text:   #ffffff;
+  --landing-btn-hover-border: rgba(255,255,255,0.4);
+  /* Drawer / sidebar */
+  --drawer-label:        rgba(255,255,255,0.18);
+  --drawer-action:       rgba(255,255,255,0.32);
+  --drawer-action-hover: rgba(255,255,255,0.7);
+  --recent-active:       rgba(255,255,255,0.75);
+  --recent-inactive:     rgba(255,255,255,0.32);
+  --recent-active-bg:    rgba(255,255,255,0.04);
+  /* Card / display components */
+  --card-container-bg:   #0D0D0D;
+  --card-bg:             rgba(255,255,255,0.04);
+  --card-border:         rgba(255,255,255,0.09);
+  --card-border-faint:   rgba(255,255,255,0.05);
+  --card-header-bg:      rgba(255,255,255,0.04);
+  --card-text:           #ffffff;
+  --card-text-muted:     rgba(255,255,255,0.7);
+  --card-text-dim:       rgba(255,255,255,0.45);
+  --card-text-faint:     rgba(255,255,255,0.3);
+  --card-surface:        rgba(255,255,255,0.05);
+}
+
+
+/* ── Light-mode overrides ──────────────────────────────────────────────────── */
+[data-theme="light"] {
+  color-scheme: light;
+  /* Drawer / sidebar */
+  --drawer-label:        rgba(0,0,0,0.22);
+  --drawer-action:       rgba(0,0,0,0.45);
+  --drawer-action-hover: rgba(0,0,0,0.82);
+  --recent-active:       rgba(0,0,0,0.82);
+  --recent-inactive:     rgba(0,0,0,0.38);
+  --recent-active-bg:    rgba(0,0,0,0.05);
+  /* Card / display components */
+  --card-container-bg:   #F4F4F0;
+  --card-bg:             rgba(0,0,0,0.03);
+  --card-border:         rgba(0,0,0,0.1);
+  --card-border-faint:   rgba(0,0,0,0.06);
+  --card-header-bg:      rgba(0,0,0,0.04);
+  --card-text:           #111111;
+  --card-text-muted:     rgba(0,0,0,0.72);
+  --card-text-dim:       rgba(0,0,0,0.45);
+  --card-text-faint:     rgba(0,0,0,0.3);
+  --card-surface:        rgba(0,0,0,0.04);
+}
+
+/* Blinking cursor animation */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* ── Musician equalizer loader ──────────────────────────────────────────── */
+@keyframes eq {
+  0%, 100% { transform: scaleY(0.2); }
+  50%       { transform: scaleY(1);   }
+}
+
+.eq-bar {
+  display: inline-block;
+  width: 3px;
+  height: 18px;
+  border-radius: 2px;
+  background: #F5B800;
+  transform-origin: bottom;
+  animation: eq 0.9s ease-in-out infinite;
+}
+.eq-bar:nth-child(1) { animation-delay: 0s;     animation-duration: 0.80s; }
+.eq-bar:nth-child(2) { animation-delay: 0.15s;  animation-duration: 0.95s; }
+.eq-bar:nth-child(3) { animation-delay: 0.05s;  animation-duration: 0.72s; }
+.eq-bar:nth-child(4) { animation-delay: 0.25s;  animation-duration: 0.88s; }
+.eq-bar:nth-child(5) { animation-delay: 0.10s;  animation-duration: 1.00s; }
+
+/* Thinking dots for landing chat demo */
+@keyframes thinking-bounce {
+  0%, 80%, 100% { opacity: 0.25; transform: translateY(0); }
+  40%           { opacity: 1;    transform: translateY(-4px); }
+}
+.thinking-dot {
+  animation: thinking-bounce 1.2s ease-in-out infinite;
+}
+
+/* Fade-in for AI bubbles */
+@keyframes chat-reveal {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.chat-reveal {
+  animation: chat-reveal 300ms ease forwards;
+}
+
+/* Scale-fade for user bubble — signals "message sent" */
+@keyframes chat-reveal-user {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.chat-reveal-user {
+  animation: chat-reveal-user 280ms cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
+}
