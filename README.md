@@ -1,3 +1,5 @@
+> **This repository has moved.** Skopos is developed in the open at **[github.com/Svector-anu/skopos](https://github.com/Svector-anu/skopos)** — the current code, including Seal, Arc support and everything since June 2026. This copy is archived and no longer updated.
+
 # skopos
 
 cross-chain defi copilot. say what you want, it routes and executes.
